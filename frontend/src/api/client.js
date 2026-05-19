@@ -1,5 +1,5 @@
 const configuredApiUrl = import.meta.env.VITE_API_URL?.trim();
-const API_URL = configuredApiUrl || (import.meta.env.DEV ? "http://localhost:5000/api" : "");
+const API_URL = configuredApiUrl || (import.meta.env.DEV ? "/api" : "");
 
 if (!API_URL) {
   throw new Error("VITE_API_URL is required for production builds.");

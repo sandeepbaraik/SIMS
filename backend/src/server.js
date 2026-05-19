@@ -14,7 +14,27 @@ const app = express();
 const port = Number(process.env.PORT || 5000);
 let initializationPromise;
 
-app.use(cors());
+const defaultAllowedOrigins = ["http://localhost:5173", "http://127.0.0.1:5173"];
+const configuredAllowedOrigins = process.env.CORS_ORIGIN?.split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+const allowedOrigins =
+  configuredAllowedOrigins && configuredAllowedOrigins.length > 0
+    ? configuredAllowedOrigins
+    : defaultAllowedOrigins;
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`Origin ${origin} is not allowed by CORS.`));
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
