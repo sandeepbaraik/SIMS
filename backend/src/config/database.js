@@ -1,4 +1,5 @@
 const { Sequelize } = require("sequelize");
+const mysql2 = require("mysql2");
 
 function readBoolean(value, defaultValue = false) {
   if (value === undefined) {
@@ -42,6 +43,7 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT || 3306),
     dialect: "mysql",
+    dialectModule: mysql2,
     dialectOptions,
     logging: false,
   }
