@@ -24,6 +24,8 @@ app.use(cookieParser());
 
 
 app.use("/api/auth", authRoutes);
+app.use("/api/dashboard", requireAuth, dashboardRoutes);
+app.use("/api/settings", requireAuth, settingsRoutes);
 
 app.use((err, _req, res, _next) => {
   console.error(err);
